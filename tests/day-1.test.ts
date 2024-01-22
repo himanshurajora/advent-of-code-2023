@@ -8,11 +8,6 @@ import {
 
 const input1 = "2911threeninesdvxvheightwobm";
 const input2 = "3three16xsxhpnqmzmnine8one";
-const input3 = "sshnxbjrt1";
-const input4 = "onefivethreefive";
-const input5 = "one3pcmponehgcqqkrbplzbfivesevenhdzfcsl";
-const input6 = "zoneight234";
-const input7 = "two1nine";
 
 describe("All day 1's task 1 tests should pass", () => {
   test(`${input1} should output 21`, () => {

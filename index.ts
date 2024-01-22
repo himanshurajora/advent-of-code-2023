@@ -1,3 +1,4 @@
 console.log("Advent of code 2023 solutions");
 
-require("./day-1");
+require("./src/day-1");
+require("./src/day-2");
