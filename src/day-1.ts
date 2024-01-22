@@ -1,4 +1,4 @@
-import { DayOneInput } from "./inputs/day-1";
+import { DayOneInput } from "../inputs/day-1";
 
 const digits = "0123456789";
 const digitWords = {
@@ -34,37 +34,26 @@ export function getCalibrationValue(input: string) {
 }
 
 export function getCalibrationValueWithWords(input: string) {
-  let firstDigit;
-  let lastDigit;
-  let sequence = "";
-  for (let i = 0; i < input.length; i++) {
-    let digit: string = input[i];
-    sequence += digit;
-
-    if (
-      digitStrings.some((digitString) => {
-        const doesInclude = sequence.includes(digitString);
-        if (doesInclude) {
-          sequence = digitString;
-        }
-        return doesInclude;
-      })
-    ) {
-      digit =
-        digitWords[sequence as unknown as keyof typeof digitWords].toString();
-      sequence = "";
-    }
-
-    if (firstDigit === undefined && digits.includes(digit)) {
-      firstDigit = digit;
-    }
-
-    if (digits.includes(digit)) {
-      lastDigit = digit;
-    }
-  }
-
-  return +`${firstDigit}${lastDigit}`;
+  const letters = [
+    "zero",
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+  ];
+  const regex = new RegExp(`(?=(?<digit>[0-9]|${letters.join("|")}))`, "g");
+  // @ts-ignore
+  const first = [...input.matchAll(regex)].at(0).groups.digit;
+  // @ts-ignore
+  const last = [...input.matchAll(regex)].at(-1).groups.digit;
+  const a = Number.isNaN(+first) ? letters.indexOf(first) : +first;
+  const b = Number.isNaN(+last) ? letters.indexOf(last) : +last;
+  return a * 10 + b;
 }
 
 export function sumOfCalibrationValues(lines: string[]) {

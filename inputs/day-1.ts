@@ -1,4 +1,4 @@
-const input = `2911threeninesdvxvheightwobm
+export const DayOneRaw = `2911threeninesdvxvheightwobm
 3three16xsxhpnqmzmnine8one
 seven5khtwo891hlb
 sixthreeqpzjpn195
@@ -999,4 +999,4 @@ zbjbeightfhbhcfkbhrthqhgsixthree11five
 fbfvqgvqfone5nctdcdpteighttwo
 dhfbhone4fourlgzftg`;
 
-export const DayOneInput = input.split("\n");
+export const DayOneInput = DayOneRaw.split("\n");
