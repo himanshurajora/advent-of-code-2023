@@ -69,3 +69,39 @@ const sumOfIdsOfPossibleGames = possibleGames.reduce((prev, curr) => {
 }, 0);
 
 console.log(`result of day 2's task 1 is ${sumOfIdsOfPossibleGames}`);
+
+// part 2
+export function dayTwoLeastRequiredCubes(turns: DayTwoTurn[]) {
+  return turns.reduce(
+    (prev, current) => {
+      if (current.r > prev.r) {
+        prev.r = current.r;
+      }
+      if (current.g > prev.g) {
+        prev.g = current.g;
+      }
+      if (current.b > prev.b) {
+        prev.b = current.b;
+      }
+
+      return prev;
+    },
+    { r: 0, g: 0, b: 0 }
+  );
+}
+
+export function dayTwoGamePower(turn: DayTwoTurn) {
+  return turn.r * turn.g * turn.b;
+}
+
+export function dayTwoPowerOfAllGames(turns: DayTwoTurn[]) {
+  return turns.reduce((prev, curr) => {
+    return prev + dayTwoGamePower(curr);
+  }, 0);
+}
+
+const totalPower = dayTwoPowerOfAllGames(
+  parsedGames.map((game) => dayTwoLeastRequiredCubes(game.turns))
+);
+
+console.log(`result of day 2's task 2 is ${totalPower}`);
