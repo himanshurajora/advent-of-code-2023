@@ -112,15 +112,3 @@ console.log(
     0
   )}`
 );
-
-const result = day3FindAdjacentStar(matrix);
-
-// only filter with two or more stars
-const filtered = Object.values(result)
-  .filter((v) => v.length === 2)
-  .map((v) => {
-    console.log(v[0], v[1], v[0] * v[1]);
-    return v[0] * v[1];
-  })
-  .reduce((p, c) => p + c, 0);
-console.log(filtered);

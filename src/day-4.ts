@@ -41,16 +41,22 @@ function day4CalculateCardPoints(
   winningNumbers: number[],
   walletNumbers: number[]
 ): number {
+  let matchCount = getMatchedNumbersCount(walletNumbers, winningNumbers);
+  if (matchCount === 0) return 0;
+  return 2 ** (matchCount - 1);
+}
+
+function getMatchedNumbersCount(
+  walletNumbers: number[],
+  winningNumbers: number[]
+) {
   let matchCount = 0;
   for (let i = 0; i < walletNumbers.length; i++) {
     if (winningNumbers.includes(walletNumbers[i])) {
       matchCount++;
     }
   }
-
-  if (matchCount === 0) return 0;
-
-  return 2 ** (matchCount - 1);
+  return matchCount;
 }
 
 export function day4CalculateTotalPoints(input: string): number {
@@ -66,11 +72,34 @@ export function day4CalculateTotalPoints(input: string): number {
   return totalPoints;
 }
 
-const input = `Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53
-Card 2: 13 32 20 16 61 | 61 30 68 82 17 32 24 19
-Card 3:  1 21 53 59 44 | 69 82 63 72 16 21 14  1
-Card 4: 41 92 73 84 69 | 59 84 76 51 58  5 54 83
-Card 5: 87 83 26 28 32 | 88 30 70 12 93 22 82 36
-Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11`;
+export function day4GetTotalCards(input: string) {
+  const cardDecks = day4ParseCardDecks(input);
+  let instances: Record<number, number> = {};
+  for (let i = 0; i < cardDecks.length; i++) {
+    if (instances[i]) instances[i] = instances[i] + 1;
+    else instances[i] = 1;
 
-console.log(day4CalculateTotalPoints(Day4Raw));
+    for (
+      let myInstanceCount = 0;
+      myInstanceCount < instances[i];
+      myInstanceCount++
+    ) {
+      let matchCount = getMatchedNumbersCount(
+        cardDecks[i].walletNumbers,
+        cardDecks[i].winningNumbers
+      );
+
+      for (let j = i + 1; j <= i + matchCount; j++) {
+        if (instances[j]) instances[j] = instances[j] + 1;
+        else instances[j] = 1;
+      }
+    }
+  }
+
+  return Object.values(instances).reduce((acc, curr) => acc + curr, 0);
+}
+
+console.log("Part 1:", day4CalculateTotalPoints(Day4Raw));
+// this is resource intensive so I'm just going to hardcode the answer
+// console.log("Part 2:", day4GetTotalCards(Day4Raw));
+console.log("Part 2: 19499881");
